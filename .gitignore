@@ -1,0 +1,22 @@
+# Ignore macOS DS_Store files
+.DS_Store
+
+# Ignore telegram bot keys
+keys.txt
+
+# Ignore test files
+tests
+*.txt
+
+# Ignore webdriver
+chromedriver
+
+# Ignore TeamNames dictionary
+TeamNames.sqlite
+
+# Ignore bytecode
+__pycache__
+
+# Others
+resources
+todo.txt
