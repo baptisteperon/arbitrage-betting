@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from bs4 import BeautifulSoup
 import datetime
 from time import sleep
 

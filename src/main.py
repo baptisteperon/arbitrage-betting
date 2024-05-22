@@ -5,6 +5,7 @@ from standardnames import StandardNames
 from dictionnaryevents import DictEvents
 from scrapers.betclic import BetclicScraper
 from scrapers.unibet import UnibetScraper
+from scrapers.zebet import ZEBetScraper
 from telegrambot import TelegramBot
 
 import time
@@ -14,9 +15,16 @@ import concurrent.futures
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-m", "--manualmapping",  nargs='?', const=True, type=bool)
+    parser.add_argument('-m', '--manualmapping', metavar='M', type=bool, default=False,
+                        help="when True, the program asks the user (via Telegram messages) to manually map events that couldn't be mapped automatically (default = False)")
+    parser.add_argument('-r', '--refresh', metavar='R', type=int, default=10,
+                        help='time delta in minutes between each scraping session (the default behavior is one every 10mins, minimum value = 1)')
+    parser.add_argument('-s', '--stake', metavar='s', type=int, default=100,
+                        help='Total amount to bet, distributed between the different outcomes (default value is 100)')
     args = parser.parse_args()
     perform_manual_mapping = args.manualmapping
+    refresh_time_delta = args.refresh
+    stake = args.stake
         
     try:
         bot = TelegramBot()
@@ -32,9 +40,10 @@ def main():
                 f.write(StandardNames.standard_event_to_string())
             dict_events = DictEvents()
             bookmakers_dict = {'Betclic': (BetclicScraper, 'https://www.betclic.fr/football-s1'),
-                            'Unibet':  (UnibetScraper, 'https://www.unibet.fr/sport/football')}
+                            'Unibet':  (UnibetScraper, 'https://www.unibet.fr/sport/football'),
+                            'ZEBet': (ZEBetScraper, 'https://www.zebet.fr/fr/sport/13-football')}
             scrapers = []
-            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
                 futures = []
                 for bookmaker in bookmakers_dict:
                     scraping_method = bookmakers_dict[bookmaker][0]
@@ -63,17 +72,17 @@ def main():
             else:
                 print('Skipping manual mapping\n')
 
-            with open('arb_opportunities.txt', 'w') as f:
-                f.write(dict_events.arbitrage_to_string())
-            dict_events.look_for_arbitrage(bot)
+            with open('odds_recap.txt', 'w') as f:
+                f.write(dict_events.odds_to_string())
+            dict_events.look_for_arbitrage(bot, stake)
         except:
             break
         time_delta = time.time()-start_time
         # we scrape the websites every 10mins
-        if (time_delta >= 600):
+        if (time_delta >= refresh_time_delta):
             continue
         else:
-            time.sleep(600-time_delta)
+            time.sleep(refresh_time_delta-time_delta)
 
     StandardNames.team_ids.close()
     StandardNames.team_names.close()

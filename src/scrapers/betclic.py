@@ -1,5 +1,4 @@
 from .scraper import Scraper 
-from event import Event
 from standardnames import StandardNames
 
 from unidecode import unidecode

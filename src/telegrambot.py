@@ -1,10 +1,8 @@
 import config
 import requests
-import time
 
 import asyncio
-from telegram import Update, Bot
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from telegram import Bot
 
 class TelegramBot:
 
@@ -27,7 +25,7 @@ class TelegramBot:
             last_id = result[last_update]['update_id']
             self.offset = last_id + 1
         else:
-            raise Exception('No update, skipping manual mapping')
+            raise Exception('No update, cannot create bot')
 
     async def send_message(self, message):
         """ Telegram messages are limited to 4096 characters.

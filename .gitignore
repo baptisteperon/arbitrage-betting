@@ -8,6 +8,9 @@ keys.txt
 tests
 *.txt
 
+# don't ignore
+!requirements.txt
+
 # Ignore webdriver
 chromedriver
 

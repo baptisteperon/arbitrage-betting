@@ -275,7 +275,7 @@ class StandardNames:
     @staticmethod
     def manual_mapping_telegram(bot):
         """ Manually mapping event with no matching found (user inputs needed)
-            Done in Telegram    
+            Done via Telegram messages    
             timeout if the user doesn't respond fast enough (defined in TelegramBot class)
         """
         for as_of_date, teams_list in StandardNames.unmatched_events.items():
