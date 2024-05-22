@@ -15,9 +15,8 @@ If we consider the event Team A vs Team B, a bookmaker will offer decimal odds f
 
 The actual probability of the event occuring could be implied from the decimal odds of an event : $Prob_A = \displaystyle\frac{1}{odds_A}$, but bookmaker make money by taking a margin on these odds, resulting in the actual odds being lower than the fair odds.
 The margin taken by the bookmaker as a percentage can be calculated as follows :
-$$
-margin = 100*((\displaystyle\frac{1}{odds_A} + \displaystyle\frac{1}{odds_D} + \displaystyle\frac{1}{odds_B}) - 1)
-$$
+
+$margin = 100*((\displaystyle\frac{1}{odds_A} + \displaystyle\frac{1}{odds_D} + \displaystyle\frac{1}{odds_B}) - 1)$
 
 Sometimes, the odds offered for the same event on different bookmakers will differ significantly. So much that the margin, when betting each outcome on the most advantageous bookmaker, will become negative. That's an arbitrage opportunity ! In that case, selecting the best odds for each outcome and betting on all of them will result in a sure profit.
 
@@ -30,9 +29,9 @@ Bookmaker2 | 2.1 | 2.85 | 4
 Bookmaker3 | 2.45 | 2.9  | 3.7
 
 In that case, if we bet Team A wins on Bookmaker3, Draw on Bookmaker1 and Team B wins on Bookmaker2, we end up with a margin of $-1.40\%$ for the bookmakers. That means an edge of $1.40\%$ for us. The amount to bet on each outcome needs to be proportional to the odds :
-$$
-Amount\ to\ bet\ on\ A = Total\ Stake*\displaystyle\frac{\displaystyle\frac{1}{odds_A}}{\displaystyle\frac{1}{odds_A} + \displaystyle\frac{1}{odds_D} + \displaystyle\frac{1}{odds_B}}
-$$
+
+$Amount\ to\ bet\ on\ A = Total\ Stake*\displaystyle\frac{\displaystyle\frac{1}{odds_A}}{\displaystyle\frac{1}{odds_A} + \displaystyle\frac{1}{odds_D} + \displaystyle\frac{1}{odds_B}}
+$
 
 In the previous example, with a total stake of 1000€, we would have to bet :
 - $1000 * \displaystyle\frac{1}{2.45}/(\displaystyle\frac{1}{2.45} + \displaystyle\frac{1}{3.05} + \displaystyle\frac{1}{4}) = 413.95€$ on Team A on boomaker3

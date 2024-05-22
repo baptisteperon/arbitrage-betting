@@ -1,5 +1,5 @@
 # Ignore macOS DS_Store files
-.DS_Store
+**/.DS_Store
 
 # Ignore telegram bot keys
 keys.txt
@@ -15,10 +15,10 @@ tests
 chromedriver
 
 # Ignore TeamNames dictionary
-TeamNames.sqlite
+**/TeamNames.sqlite
 
 # Ignore bytecode
-__pycache__
+**/__pycache__
 
 # Others
 resources
