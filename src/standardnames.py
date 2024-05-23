@@ -45,6 +45,7 @@ class StandardNames:
         """ fill a dictionary containing all the upcoming events
             team names in this dictionary are considered baseline data for fuzzy team names matching
             data comes from the website www.matchendirect.fr which gathers all the upcomming football matches in the world for the next 14 days
+            returns True if we updated the standard_events dictionary (only once a day), False otherwise
         """
         file_name = 'teamNames.sqlite'
         headers = {'User-Agent': 'Mozilla/5.0'} # to fix 403 Forbidden response when getting url
@@ -112,6 +113,9 @@ class StandardNames:
                                 StandardNames.standard_events[event_date_time] = tmp_dict
                             else:
                                 StandardNames.standard_events[event_date_time] = [(team1, team2)]
+            return True
+        else:
+            return False
 
     @staticmethod
     def dict_to_string(dict):
