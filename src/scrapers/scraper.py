@@ -15,7 +15,7 @@ class Scraper(ABC):
     def __init__(self, url):
         """ Create the driver and get the url """
         chrome_options = Options()
-        #chrome_options.add_argument('--headless')   # comment this line to debug the scraper
+        chrome_options.add_argument('--headless')   # comment this line to debug the scraper
         self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.get(url)
 
