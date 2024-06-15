@@ -22,32 +22,60 @@ class UnibetScraper(Scraper):
 
     def scrape(self, dict_event):
         content = self.html.find('section', {'class': 'eventsdays-list'})
-        days = content.findChildren('div', recursive=False)
-        for day in days:
-            if Scraper.check_if_markup_exists(day, 'div', 'class', 'eventsday_header'):
-                is_today = (day.find('div', {'class', 'eventsday_header'}).text == "Aujourd'hui")
-                events = day.findAll('section', {'class': 'eventcard--toplight'})
-                for event in events:
-                    if (event == None) :
-                        events.remove(event)
-                        continue
-                    event_date_time_string = event.find('div', {'class': 'eventcard-header-meta'}).text.replace('h', ':')
-                    if is_today:
-                        event_date_time_string = "Aujourd'hui " + event_date_time_string
-                    event_date_time = Scraper.to_date_time(event_date_time_string)
-                    oddsbox1, oddsboxx, oddsbox2 = event.findAll('section', {'id': 'cps-oddbox'})
-                    team1 = oddsbox1.find('div', {'class': 'oddbox-label'}).text
-                    team2 = oddsbox2.find('div', {'class': 'oddbox-label'}).text
-                    team1 = unidecode(team1.lower())
-                    team2 = unidecode(team2.lower())
-                    competition_name = event.find('div', {'class': 'eventcard-header-title'}).find('span').text.strip()
-                    if (('women' in competition_name) or ('f.' in competition_name) or ('(f)' in competition_name)):
-                        team1 = team1 + ' women'
-                        team2 = team2 + ' women'
-                    ids = StandardNames.assign_ids(event_date_time, team1, team2, 'Unibet') # tuple containing the ids of the 2 teams
-                    if not ids is None: # if no match has been found for the event
-                        odds1 = float(oddsbox1.find('div', {'class': 'oddbox-value'}).text.strip())
-                        oddsx = float(oddsboxx.find('div', {'class': 'oddbox-value'}).text.strip())
-                        odds2 = float(oddsbox2.find('div', {'class': 'oddbox-value'}).text.strip())
-                        #print(event_date_time.strftime('%d-%m-%Y %H:%M') + ' : ' + team1 + ' vs ' + team2 + ' (' + str(odds1) + ', ' + str(oddsx) + ', ' + str(odds2) + ')')
-                        dict_event.append_event(event_date_time, team1, team2, 'Unibet', odds1, oddsx, odds2)
+        events = content.findAll('section', {'class': 'eventcard--toplight'})
+        for event in events:
+            if (event == None) :
+                events.remove(event)
+                continue
+            event_date_time_string = event.find('div', {'class': 'eventcard-header-meta'}).text.replace('h', ':')
+            if (not ' ' in event_date_time_string):
+                event_date_time_string = "Aujourd'hui " + event_date_time_string
+            event_date_time = Scraper.to_date_time(event_date_time_string)
+            oddsbox1, oddsboxx, oddsbox2 = event.findAll('section', {'id': 'cps-oddbox'})
+            team1 = oddsbox1.find('div', {'class': 'oddbox-label'}).text
+            team2 = oddsbox2.find('div', {'class': 'oddbox-label'}).text
+            team1 = unidecode(team1.lower())
+            team2 = unidecode(team2.lower())
+            competition_name = event.find('div', {'class': 'eventcard-header-title'}).find('span').text.strip()
+            if (('women' in competition_name) or ('f.' in competition_name) or ('(f)' in competition_name)):
+                team1 = team1 + ' women'
+                team2 = team2 + ' women'
+            ids = StandardNames.assign_ids(event_date_time, team1, team2, 'Unibet') # tuple containing the ids of the 2 teams
+            if not ids is None: # if no match has been found for the event
+                odds1 = float(oddsbox1.find('div', {'class': 'oddbox-value'}).text.strip())
+                oddsx = float(oddsboxx.find('div', {'class': 'oddbox-value'}).text.strip())
+                odds2 = float(oddsbox2.find('div', {'class': 'oddbox-value'}).text.strip())
+                #print(event_date_time.strftime('%d-%m-%Y %H:%M') + ' : ' + team1 + ' vs ' + team2 + ' (' + str(odds1) + ', ' + str(oddsx) + ', ' + str(odds2) + ')')
+                dict_event.append_event(event_date_time, team1, team2, 'Unibet', odds1, oddsx, odds2)
+
+    def scrape2(self, dict_event):
+            content = self.html.find('section', {'class': 'eventsdays-list'})
+            days = content.findChildren('div', recursive=False)
+            for day in days:
+                if Scraper.check_if_markup_exists(day, 'div', 'class', 'eventsday_header'):
+                    is_today = (day.find('div', {'class', 'eventsday_header'}).text == "Aujourd'hui")
+                    events = day.findAll('section', {'class': 'eventcard--toplight'})
+                    for event in events:
+                        if (event == None) :
+                            events.remove(event)
+                            continue
+                        event_date_time_string = event.find('div', {'class': 'eventcard-header-meta'}).text.replace('h', ':')
+                        if is_today:
+                            event_date_time_string = "Aujourd'hui " + event_date_time_string
+                        event_date_time = Scraper.to_date_time(event_date_time_string)
+                        oddsbox1, oddsboxx, oddsbox2 = event.findAll('section', {'id': 'cps-oddbox'})
+                        team1 = oddsbox1.find('div', {'class': 'oddbox-label'}).text
+                        team2 = oddsbox2.find('div', {'class': 'oddbox-label'}).text
+                        team1 = unidecode(team1.lower())
+                        team2 = unidecode(team2.lower())
+                        competition_name = event.find('div', {'class': 'eventcard-header-title'}).find('span').text.strip()
+                        if (('women' in competition_name) or ('f.' in competition_name) or ('(f)' in competition_name)):
+                            team1 = team1 + ' women'
+                            team2 = team2 + ' women'
+                        ids = StandardNames.assign_ids(event_date_time, team1, team2, 'Unibet') # tuple containing the ids of the 2 teams
+                        if not ids is None: # if no match has been found for the event
+                            odds1 = float(oddsbox1.find('div', {'class': 'oddbox-value'}).text.strip())
+                            oddsx = float(oddsboxx.find('div', {'class': 'oddbox-value'}).text.strip())
+                            odds2 = float(oddsbox2.find('div', {'class': 'oddbox-value'}).text.strip())
+                            #print(event_date_time.strftime('%d-%m-%Y %H:%M') + ' : ' + team1 + ' vs ' + team2 + ' (' + str(odds1) + ', ' + str(oddsx) + ', ' + str(odds2) + ')')
+                            dict_event.append_event(event_date_time, team1, team2, 'Unibet', odds1, oddsx, odds2)

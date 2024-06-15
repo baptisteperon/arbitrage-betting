@@ -1,6 +1,5 @@
 import pandas as pd
 import datetime
-import requests
 
 from event import Event
 from standardnames import StandardNames

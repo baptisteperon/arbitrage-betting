@@ -12,10 +12,11 @@ def maintest():
     """ This main is used to test the different scrapers
     """
     dict_events = DictEvents()
-    #scraper = UnibetScraper('https://www.unibet.fr/sport/football')
+    scraper = UnibetScraper('https://www.unibet.fr/sport/football')
     #scraper = BetclicScraper('https://www.betclic.fr/football-s1')
-    scraper = ZEBetScraper('https://www.zebet.fr/fr/sport/13-football')
+    #scraper = ZEBetScraper('https://www.zebet.fr/fr/sport/13-football')
     scraper.scrape(dict_events)
+    print(dict_events.odds_to_string())
     scraper.close()
 
 if __name__ == "__main__":
