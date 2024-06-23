@@ -8,6 +8,7 @@ import requests
 import re
 import os
 import asyncio
+import logging
 
 
 class StandardNames:
@@ -47,7 +48,7 @@ class StandardNames:
             data comes from the website www.matchendirect.fr which gathers all the upcomming football matches in the world for the next 14 days
             returns True if we updated the standard_events dictionary (only once a day), False otherwise
         """
-        file_name = 'teamNames.sqlite'
+        file_name = 'TeamNames.sqlite'
         headers = {'User-Agent': 'Mozilla/5.0'} # to fix 403 Forbidden response when getting url
         if (datetime.date.today() != datetime.date.fromtimestamp(os.path.getmtime(file_name))) or (len(StandardNames.standard_events) == 0):
             """ we only refill standard_events dictionary if it is the first run of the day 
@@ -206,7 +207,8 @@ class StandardNames:
                 StandardNames.unmatched_events[event_date_time] = [(team1, team2, bookmaker)]
             return None
         
-        print('No event at this time (' + event_date_time.strftime('%d-%m-%Y %H:%M') + ') in standardEvents dictionary\ncould not assign id to event : ' + team1 + ' vs ' + team2)
+        # if the event is not present in standardEvents
+        logging.info('No event at this time (' + event_date_time.strftime('%d-%m-%Y %H:%M') + ') in standardEvents dictionary\ncould not assign id to event : ' + team1 + ' vs ' + team2)
         return None
 
 
