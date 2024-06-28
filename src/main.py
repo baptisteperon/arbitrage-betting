@@ -9,6 +9,7 @@ from dictionnaryevents import DictEvents
 from scrapers.betclic import BetclicScraper
 from scrapers.unibet import UnibetScraper
 from scrapers.zebet import ZEBetScraper
+from scrapers.betsson import BetssonScraper
 from telegrambot import TelegramBot
 
 def main():
@@ -54,7 +55,8 @@ def main():
             dict_events = DictEvents()
             bookmakers_dict = {'Betclic': (BetclicScraper, 'https://www.betclic.fr/football-s1'),
                             'Unibet':  (UnibetScraper, 'https://www.unibet.fr/sport/football'),
-                            'ZEBet': (ZEBetScraper, 'https://www.zebet.fr/fr/sport/13-football')}
+                            'ZEBet': (ZEBetScraper, 'https://www.zebet.fr/fr/sport/13-football'),
+                            'Betsson': (BetssonScraper, 'https://betsson.fr/fr/a-venir/football')}
             scrapers = []
             #print(datetime.datetime.now().strftime('%m/%d/%Y, %H:%M:%S') + ' : Scraping bookmakers...')
             logging.info('Scraping bookmakers...')
