@@ -1,6 +1,6 @@
 # Football arbitrage betting bot
 
-This program is designed to scrape the odds of football matches on the websites of the main french bookmakers (Betclic, Unibet, ZEBet) and find arbitrage opportunities.
+This program is designed to scrape the odds of football matches on the websites of the main french bookmakers (Betclic, Unibet, ZEBet, Betsson) and find arbitrage opportunities.
 
 If an arbitrage opportunity arises, the user is informed via an automatic message on telegram.
 
@@ -95,18 +95,5 @@ Launch the program :
     -s s, --stake s         total amount to bet, distributed between the different outcomes (default value is
                             100)
 
-## Deploying the scraper on AWS lightsail
 
-python3 --version
 
-sudo yum install git
-sudo yum install pip
-ssh-keygen
-ssh-add id_rsa
-cat id_rsa.pub
-git clone <ssh-url>
-
-sudo wget url-chromedriver-for-linux (https://googlechromelabs.github.io/chrome-for-testing/)
-sudo unzip chromedriver_linux64.zip
-
-sudo pip3 install -r requirements.txt
